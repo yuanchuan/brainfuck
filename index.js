@@ -14,14 +14,14 @@ function Iterator(min, max) {
 function Scanner(text = '') {
   const it = Iterator(0, text.length - 1);
   return Object.assign({}, it, {
-    get() {
+    text() {
       return text[ it.curr() ]
     },
     skip(dir) {
       let count = 1;
       while (count) {
         this[dir]();
-        let c = this.get();
+        let c = this.text();
         if (c == '[') count += (dir == 'next' ? 1 : -1);
         if (c == ']') count += (dir == 'prev' ? 1 : -1);
       }
@@ -59,7 +59,7 @@ module.exports = async function interpret(program) {
   const scanner = Scanner(program);
   const register = Register();
   while (!scanner.over()) {
-    switch (scanner.get()) {
+    switch (scanner.text()) {
       case '>': register.next(); break;
       case '<': register.prev(); break;
       case '+': register.inc(); break;
