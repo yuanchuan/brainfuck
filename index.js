@@ -31,14 +31,17 @@ function Scanner(text = '') {
 
 function Register(stream) {
   const it = Iterator(0, Infinity);
-  const reg = [], pos = [];
+  const reg = [];
+  function output(c) {
+    stdout.write(String.fromCharCode(c));
+  }
   return Object.assign({}, it, {
     set(n) { reg[ it.curr() ] = (n < 0 ? 0 : n) },
-    val()  { return reg[ it.curr() ] },
-    inc()  { this.set((this.val() || 0) + 1) },
-    dec()  { this.set((this.val() || 0) - 1) },
-    put()  { stdout.write(String.fromCharCode(this.val())) },
-    get()  {
+    val() { return reg[ it.curr() ] },
+    inc() { this.set((this.val() || 0) + 1) },
+    dec() { this.set((this.val() || 0) - 1) },
+    put() { output(this.val()) },
+    get() {
       return new Promise(resolve => {
         stdin.setEncoding('utf8');
         stdin.setRawMode(true);
@@ -49,15 +52,14 @@ function Register(stream) {
         });
       });
     }
-  })
+  });
 }
 
 module.exports = async function interpret(program) {
   const scanner = Scanner(program);
   const register = Register();
   while (!scanner.over()) {
-    let c = scanner.get();
-    switch (c) {
+    switch (scanner.get()) {
       case '>': register.next(); break;
       case '<': register.prev(); break;
       case '+': register.inc(); break;
