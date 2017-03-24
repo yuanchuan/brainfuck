@@ -29,7 +29,7 @@ function Scanner(text = '') {
   })
 }
 
-function Register(stream) {
+function Register() {
   const it = Iterator(0, Infinity);
   const reg = [];
   function output(c) {
