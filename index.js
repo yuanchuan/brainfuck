@@ -53,7 +53,9 @@ function Register(stream) {
   })
 }
 
-async function read(scanner, register) {
+module.exports = async function interpret(program) {
+  const scanner = Scanner(program);
+  const register = Register();
   while (!scanner.over()) {
     let c = scanner.get();
     switch (c) {
@@ -79,8 +81,4 @@ async function read(scanner, register) {
     }
     scanner.next();
   }
-}
-
-module.exports = function interpret(program) {
-  read(Scanner(program), Register());
 }
