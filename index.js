@@ -29,7 +29,7 @@ function Scanner(text = '') {
   })
 }
 
-function Register() {
+function Tape() {
   const it = Iterator(0, Infinity);
   const reg = [];
   function output(c) {
@@ -57,26 +57,26 @@ function Register() {
 
 module.exports = async function interpret(program) {
   const scanner = Scanner(program);
-  const register = Register();
+  const tape = Tape();
   while (!scanner.over()) {
     switch (scanner.text()) {
-      case '>': register.next(); break;
-      case '<': register.prev(); break;
-      case '+': register.inc(); break;
-      case '-': register.dec(); break;
-      case '.': register.put(); break;
+      case '>': tape.next(); break;
+      case '<': tape.prev(); break;
+      case '+': tape.inc(); break;
+      case '-': tape.dec(); break;
+      case '.': tape.put(); break;
       case ',': {
         stdin.resume();
-        await register.get();
+        await tape.get();
         stdin.pause();
         break;
       }
       case '[': {
-        if (!register.val()) scanner.skip('next');
+        if (!tape.val()) scanner.skip('next');
         break;
       }
       case ']': {
-        if (register.val()) scanner.skip('prev');
+        if (tape.val()) scanner.skip('prev');
         break;
       }
     }
