@@ -1,0 +1,28 @@
+{
+  "name": "@yuanchuan/brainfuck",
+  "version": "1.0.0",
+  "description": "A simple brainfuck interpreter",
+  "main": "index.js",
+  "bin": {
+    "brainfuck": "./bin/brainfuck"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node" : ">=7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuanchuan/brainfuck.git"
+  },
+  "keywords": [
+    "brainfuck"
+  ],
+  "author": "yuanchuan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuanchuan/brainfuck/issues"
+  },
+  "homepage": "https://github.com/yuanchuan/brainfuck#readme"
+}

@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const interpret = require('../');
+
+function help() {
+  console.log(`
+    Usage: brainfuck <filename>
+  `);
+}
+
+const filename = process.argv[2];
+if (filename === undefined) {
+  return help();
+}
+
+if (!fs.existsSync(filename)) {
+  return console.error(`${ filename } does not exist.`);
+}
+
+try {
+  const content = fs.readFileSync(filename, 'utf-8');
+  interpret(content);
+} catch (err) {
+  throw new Error(err);
+}
