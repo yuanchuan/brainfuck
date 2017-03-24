@@ -55,7 +55,7 @@ function Tape() {
   });
 }
 
-module.exports = async function interpret(program) {
+async function interpret(program) {
   const scanner = Scanner(program);
   const tape = Tape();
   while (!scanner.over()) {
@@ -83,3 +83,5 @@ module.exports = async function interpret(program) {
     scanner.next();
   }
 }
+
+module.exports = interpret;
