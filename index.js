@@ -31,13 +31,13 @@ function Scanner(text = '') {
 
 function Tape() {
   const it = Iterator(0, Infinity);
-  const reg = [];
+  const cells = [];
   function output(c) {
     stdout.write(String.fromCharCode(c));
   }
   return Object.assign({}, it, {
-    set(n) { reg[ it.curr() ] = (n < 0 ? 0 : n) },
-    val() { return reg[ it.curr() ] },
+    set(n) { cells[ it.curr() ] = (n < 0 ? 0 : n) },
+    val() { return cells[ it.curr() ] },
     inc() { this.set((this.val() || 0) + 1) },
     dec() { this.set((this.val() || 0) - 1) },
     put() { output(this.val()) },
