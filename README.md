@@ -11,5 +11,5 @@ npm install -g @yuanchuan/brainfuck
 ## Usage
 
 ```bash
-$ brainfuck example/fibonacci.bf
+$ brainfuck samples/fibonacci.bf
 ```
