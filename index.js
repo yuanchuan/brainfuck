@@ -34,7 +34,6 @@ function Register(stream) {
   const reg = [], pos = [];
   return Object.assign({}, it, {
     set(n) { reg[ it.curr() ] = (n < 0 ? 0 : n) },
-    pos(v) { return pos[(v === undefined) ? 'pop' : 'push'](v) },
     val()  { return reg[ it.curr() ] },
     inc()  { this.set((this.val() || 0) + 1) },
     dec()  { this.set((this.val() || 0) - 1) },
