@@ -21,7 +21,7 @@ npm install -g @yuanchuan/brainfuck
 $ brainfuck samples/numwarp.bf
 
 1234
-        \
+       \
       \/\
     /\
      /\
