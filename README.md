@@ -18,5 +18,15 @@ npm install -g @yuanchuan/brainfuck
 ## Usage
 
 ```bash
-$ brainfuck samples/hello-world.bf
+$ brainfuck samples/numwarp.bf
+
+1234
+        \
+      \/\
+    /\
+     /\
+  /\  /
+   /
+ \ \/
+  \
 ```
