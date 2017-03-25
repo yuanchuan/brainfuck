@@ -33,20 +33,16 @@ function Tape() {
   const it = Iterator(0, Infinity);
   const cells = [];
 
-  function output(c) {
-    stdout.write(String.fromCharCode(c));
-  }
-
   // fix for the broken stdin of nodejs.
-  const readStdin = (input => () =>
+  const read = (input => () =>
     new Promise(resolve => {
       if (input.length) {
-        resolve(input[0]);
+        resolve(input.charCodeAt(0));
         input = input.substr(1);
       } else {
         stdin.once('data', (chunk) => {
           input = chunk;
-          readStdin().then(resolve);
+          read().then(resolve);
           stdin.pause();
         });
         stdin.setEncoding('utf8');
@@ -57,15 +53,11 @@ function Tape() {
 
   return Object.assign({}, it, {
     set(n) { cells[ it.curr() ] = (n < 0 ? 0 : n) },
-    val() { return cells[ it.curr() ] },
-    inc() { this.set((this.val() || 0) + 1) },
-    dec() { this.set((this.val() || 0) - 1) },
-    put() { output(this.val()) },
-    get() {
-      return readStdin().then(c => {
-        this.set(c.charCodeAt(0));
-      });
-    }
+    val()  { return cells[ it.curr() ] },
+    inc()  { this.set((this.val() || 0) + 1) },
+    dec()  { this.set((this.val() || 0) - 1) },
+    put()  { stdout.write(String.fromCharCode(this.val())) },
+    get()  { return read().then(this.set) }
   });
 }
 
@@ -80,14 +72,8 @@ async function interpret(program) {
       case '-': tape.dec(); break;
       case '.': tape.put(); break;
       case ',': await tape.get(); break;
-      case '[': {
-        if (!tape.val()) scanner.skip('next');
-        break;
-      }
-      case ']': {
-        if (tape.val()) scanner.skip('prev');
-        break;
-      }
+      case '[': tape.val() || scanner.skip('next'); break;
+      case ']': tape.val() && scanner.skip('prev'); break;
     }
     scanner.next();
   }
